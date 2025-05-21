@@ -8,7 +8,7 @@ function TodoList({ tasks, onToggle, onDelete }) {
   return (
     <ul className="list">
       {tasks.map((task, index) => (
-        <li key={index} className="item">
+        <li key={task.id ?? index} className="item">
           <input
             type="checkbox"
             checked={task.completed}
