@@ -3,15 +3,18 @@ import TodoList from './TodoList.jsx'
 import './App.css'
 
 function App() {
-  const [tasks, setTasks] = useState(() => {
-    const saved = localStorage.getItem('tasks')
-    return saved ? JSON.parse(saved) : []
-  })
+  const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(false)
   const [text, setText] = useState('')
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-  }, [tasks])
+    setLoading(true)
+    fetch('http://localhost:3000/api/tasks')
+      .then((res) => res.json())
+      .then((data) => setTasks(data))
+      .catch(() => {})
+      .finally(() => setLoading(false))
+  }, [])
 
   const addTask = (e) => {
     e.preventDefault()
@@ -46,7 +49,11 @@ function App() {
         />
         <button type="submit">Add</button>
       </form>
-      <TodoList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+      {loading ? (
+        <div className="spinner" aria-label="loading" />
+      ) : (
+        <TodoList tasks={tasks} onToggle={toggleTask} onDelete={deleteTask} />
+      )}
     </div>
   )
 }

@@ -1,15 +1,17 @@
 # Codex Todo
 
 This is a simple ReactJS to-do list application built with [Vite](https://vitejs.dev/).
-Tasks are stored using React's `useState` hook and there is no external state
-management library.
+Tasks are fetched from a small Express server backed by MongoDB.
 
 ## Getting Started
 
-Install dependencies and start the development server:
+Install dependencies and start both the React app and the API server:
 
 ```bash
 npm install
+# start the API server
+npm run server &
+# then start the front-end
 npm run dev
 ```
 
